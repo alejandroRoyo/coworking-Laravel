@@ -15,16 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->enum('rol', ['Administrador', 'Usuario'])->default('Usuario');
             $table->timestamps();
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
         });
 
         Schema::create('sessions', function (Blueprint $table) {
@@ -35,6 +28,25 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+        Schema::create('espacios', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->integer('capacity');
+            $table->decimal('precio_por_hora', 8, 2);
+            $table->timestamps();
+        });
+
+        Schema::create('reservas', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('espacio_id')->constrained('espacios')->onDelete('cascade');
+            $table->date('fecha');
+            $table->time('hora_inicio');
+            $table->time('hora_fin');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -43,7 +55,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('espacios');
+        Schema::dropIfExists('reservas');
     }
 };
