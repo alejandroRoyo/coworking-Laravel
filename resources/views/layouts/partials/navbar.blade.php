@@ -1,21 +1,22 @@
-{{-- <ul class="nav">
-    <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="#">Active</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Link</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-    </li>
-  </ul> --}}
+<nav class="bg-white shadow-md">
+  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <a href="{{ url('/') }}" class="text-2xl font-bold text-gray-800">Coworking</a>
 
-<li class="nav-item">
-    <a class="nav-link" href="{{ route('espacios.index') }}">Espacios</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="{{ route('reservas.index') }}">Mis Reservas</a>
-</li>
+      <!-- Menú de navegación -->
+      <div class="space-x-4 flex items-center">
+          <a href="{{ url('/espacios.index') }}" class="text-gray-600 hover:text-blue-500">Espacios</a>
+          <a href="{{ url('/reservas.index') }}" class="text-gray-600 hover:text-blue-500">Reservas</a>
+
+          @guest
+              <a href="{{ url('/login') }}" class="text-gray-600 hover:text-blue-500">Login</a>
+              <a href="{{ url('/register') }}" class="text-gray-600 hover:text-blue-500">Registro</a>
+          @else
+              <form action="{{ url('/logout') }}" method="GET" class="inline">
+                  @csrf
+                  <button type="submit" class="text-red-500 hover:text-red-700">Logout</button>
+              </form>
+          @endguest
+      </div>
+  </div>
+</nav>
