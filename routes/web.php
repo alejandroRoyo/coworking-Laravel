@@ -9,21 +9,20 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\EspacioController;
 use App\Http\Controllers\ReservaController;
 
-Route::get('/', function () {
-    return view('welcome');
+// Página de bienvenida
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+// Rutas de autenticación
+Route::get('/login', [LoginController::class, 'show'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+
+Route::get('/register', [RegisterController::class, 'show'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+
+Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+
+// Rutas protegidas
+Route::middleware('auth')->group(function () {
+    Route::resource('espacios', EspacioController::class);
+    Route::resource('reservas', ReservaController::class);
 });
-
-Route::get('/register', [RegisterController::class, 'show']);;
-
-Route::post('/register', [RegisterController::class, 'register']);;
-
-Route::get('/login', [LoginController::class, 'show']);;
-
-Route::post('/login', [loginController::class, 'login']);;
-
-Route::get('/home', [HomeController::class, 'index']);
-
-Route::get('/logout', [LogoutController::class, 'logout']);
-
-Route::resource('espacios', EspacioController::class)->middleware('auth');
-Route::resource('reservas', ReservaController::class)->middleware('auth');

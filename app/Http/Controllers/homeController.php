@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
-    //
     public function index()
-    {
-        $espacios = \App\Models\Espacio::all();
-        return view('home.index', compact('espacios'));
-    }
+{
+    return view('home.index');
+}
+
 }
