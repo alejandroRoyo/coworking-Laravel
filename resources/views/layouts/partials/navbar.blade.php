@@ -1,20 +1,20 @@
-<nav class="bg-white shadow-md">
-  <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+<nav style="background-color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
       <!-- Logo -->
-      <a href="{{ url('/') }}" class="text-2xl font-bold text-gray-800">Coworking</a>
+      <a href="{{ url('/home') }}" style="font-size: 1.5rem; font-weight: 700; color: #4a5568;">Coworking</a>
 
       <!-- Menú de navegación -->
-      <div class="space-x-4 flex items-center">
-          <a href="{{ url('/espacios.index') }}" class="text-gray-600 hover:text-blue-500">Espacios</a>
-          <a href="{{ url('/reservas.index') }}" class="text-gray-600 hover:text-blue-500">Reservas</a>
+      <div style="display: flex; align-items: center; gap: 1rem;">
+          <a href="{{ url('/espacios') }}" style="color: #4a5568; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#4a5568'">Espacios</a>
+          <a href="{{ url('/reservas') }}" style="color: #4a5568; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#4a5568'">Reservas</a>
 
           @guest
-              <a href="{{ url('/login') }}" class="text-gray-600 hover:text-blue-500">Login</a>
-              <a href="{{ url('/register') }}" class="text-gray-600 hover:text-blue-500">Registro</a>
+              <a href="{{ url('/login') }}" style="color: #4a5568; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#4a5568'">Login</a>
+              <a href="{{ url('/register') }}" style="color: #4a5568; text-decoration: none; transition: color 0.3s;" onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#4a5568'">Registro</a>
           @else
-              <form action="{{ url('/logout') }}" method="GET" class="inline">
+              <form action="{{ url('/logout') }}" method="GET" style="display: inline;">
                   @csrf
-                  <button type="submit" class="text-red-500 hover:text-red-700">Logout</button>
+                  <button type="submit" style="color: #ef4444; background: none; border: none; cursor: pointer; transition: color 0.3s;" onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='#ef4444'">Logout</button>
               </form>
           @endguest
       </div>

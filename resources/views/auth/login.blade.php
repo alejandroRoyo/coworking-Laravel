@@ -1,12 +1,12 @@
 @extends('layouts.app-master')
 
 @section('content')
-<div class="flex justify-center items-center h-screen bg-gray-100">
-    <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-        <h2 class="text-2xl font-bold text-center mb-6">Iniciar Sesión</h2>
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f7fafc;">
+    <div style="width: 100%; max-width: 28rem; background-color: white; padding: 2rem; border-radius: 0.5rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <h2 style="font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 1.5rem;">Iniciar Sesión</h2>
 
         @if ($errors->any())
-            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+            <div style="background-color: #fecaca; color: #b91c1c; padding: 0.75rem; border-radius: 0.375rem; margin-bottom: 1rem;">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -18,23 +18,23 @@
         <form action="{{ url('/login') }}" method="POST">
             @csrf
 
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700">Correo Electrónico</label>
-                <input type="email" name="email" id="email" class="w-full p-2 border rounded-md" required>
+            <div style="margin-bottom: 1rem;">
+                <label for="email" style="display: block; color: #4a5568;">Correo Electrónico</label>
+                <input type="email" name="email" id="email" style="width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;" required>
             </div>
 
-            <div class="mb-4">
-                <label for="password" class="block text-gray-700">Contraseña</label>
-                <input type="password" name="password" id="password" class="w-full p-2 border rounded-md" required>
+            <div style="margin-bottom: 1rem;">
+                <label for="password" style="display: block; color: #4a5568;">Contraseña</label>
+                <input type="password" name="password" id="password" style="width: 100%; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;" required>
             </div>
 
-            <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
+            <button type="submit" style="width: 100%; background-color: #3b82f6; color: white; padding: 0.5rem; border-radius: 0.375rem; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#2563eb'" onmouseout="this.style.backgroundColor='#3b82f6'">
                 Iniciar Sesión
             </button>
         </form>
 
-        <p class="mt-4 text-center">
-            ¿No tienes una cuenta? <a href="{{ url('/register') }}" class="text-blue-500">Regístrate</a>
+        <p style="margin-top: 1rem; text-align: center;">
+            ¿No tienes una cuenta? <a href="{{ url('/register') }}" style="color: #2563eb;">Regístrate</a>
         </p>
     </div>
 </div>
