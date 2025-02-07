@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\EspacioController;
 use App\Http\Controllers\ReservaController;
+use App\Http\Controllers\AdminController;
 
 // Página de bienvenida
 Route::get('/home', [HomeController::class, 'index'])->name('home');
@@ -25,4 +26,15 @@ Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::resource('espacios', EspacioController::class);
     Route::resource('reservas', ReservaController::class);
+    Route::get('/reservas/{reserva}/edit', [ReservaController::class, 'edit'])->name('reservas.edit');
+    Route::put('/reservas/{reserva}', [ReservaController::class, 'update'])->name('reservas.update');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.panel');
+    Route::put('/admin/user/{id}', [AdminController::class, 'updateUser'])->name('admin.updateUser');
+    Route::delete('/admin/user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
 });
+
+use App\Http\Controllers\ComentarioController;
+
+Route::get('/comentarios/create', [ComentarioController::class, 'create'])->name('comentarios.create');
+Route::post('/comentarios', [ComentarioController::class, 'store'])->name('comentarios.store');
+

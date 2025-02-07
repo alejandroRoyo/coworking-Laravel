@@ -63,4 +63,23 @@ class ReservaController extends Controller
         $reserva->delete();
         return redirect()->route('reservas.index')->with('success', 'Reserva cancelada');
     }
+    public function edit(Reserva $reserva)
+    {
+        // Opcional: pasar también los espacios si el usuario debe poder cambiar el espacio de la reserva
+        $espacios = \App\Models\Espacio::all();
+        return view('reservas.edit', compact('reserva', 'espacios'));
+    }
+
+    public function update(Request $request, Reserva $reserva)
+    {
+        $request->validate([
+            'espacio_id'  => 'required|exists:espacios,id',
+            'fecha'       => 'required|date',
+            'hora_inicio' => 'required',
+            'hora_fin'    => 'required|after:hora_inicio',
+        ]);
+
+        $reserva->update($request->all());
+        return redirect()->route('reservas.index')->with('success', 'Reserva actualizada correctamente');
+    }
 }

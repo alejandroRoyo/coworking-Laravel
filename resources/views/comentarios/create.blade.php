@@ -1,0 +1,33 @@
+@extends('layouts.app-master')
+
+@section('content')
+    <h1 style="font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem;">Añadir Comentario</h1>
+
+    @if ($errors->any())
+        <div style="color: red; margin-bottom: 1rem;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="{{ route('comentarios.store') }}" method="POST">
+        @csrf
+
+        <div style="margin-bottom: 1rem;">
+            <label for="nombre" style="display: block; margin-bottom: 0.5rem;">Nombre (opcional):</label>
+            <input type="text" name="nombre" id="nombre" style="padding: 0.5rem; width: 100%; border: 1px solid #ccc; border-radius: 5px;">
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+            <label for="comentario" style="display: block; margin-bottom: 0.5rem;">Comentario:</label>
+            <textarea name="comentario" id="comentario" required style="padding: 0.5rem; width: 100%; border: 1px solid #ccc; border-radius: 5px;" rows="5"></textarea>
+        </div>
+
+        <button type="submit" style="padding: 0.75rem; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Enviar Comentario
+        </button>
+    </form>
+@endsection

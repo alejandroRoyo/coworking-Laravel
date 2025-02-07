@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     public function index()
-{
-    return view('home.index');
-}
-
+    {
+        $comentarios = \App\Models\Comentario::latest()->get();
+        return view('home.index', compact('comentarios'));
+    }
 }

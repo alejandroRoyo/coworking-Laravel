@@ -29,10 +29,17 @@
                     <td style="border: 1px solid #e2e8f0; padding: 0.75rem;">{{ $reserva->hora_inicio }}</td>
                     <td style="border: 1px solid #e2e8f0; padding: 0.75rem;">{{ $reserva->hora_fin }}</td>
                     <td style="border: 1px solid #e2e8f0; padding: 0.75rem;">
+                        <!-- Botón Editar -->
+                        <a href="{{ route('reservas.edit', $reserva->id) }}" 
+                           style="padding: 0.5rem 1rem; background-color: #3182ce; color: white; text-decoration: none; border-radius: 0.375rem; margin-right: 0.5rem;">
+                            Editar
+                        </a>
+                        <!-- Botón Cancelar -->
                         <form action="{{ route('reservas.destroy', $reserva->id) }}" method="POST" style="display:inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" style="padding: 0.5rem 1rem; background-color: #e53e3e; color: white; border: none; border-radius: 0.375rem; cursor: pointer; transition: background-color 0.3s;">
+                            <button type="submit" 
+                                    style="padding: 0.5rem 1rem; background-color: #e53e3e; color: white; border: none; border-radius: 0.375rem; cursor: pointer; transition: background-color 0.3s;">
                                 Cancelar
                             </button>
                         </form>

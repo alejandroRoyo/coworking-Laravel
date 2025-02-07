@@ -7,6 +7,11 @@
         <!-- Menú de navegación -->
         <div style="display: flex; align-items: center; gap: 1rem;">
             @auth
+                @if (auth()->user()->rol === 'Administrador')
+                    <a href="{{ route('admin.panel') }}" style="color: #ff9800; text-decoration: none; font-weight: bold;">
+                        Panel de Control
+                    </a>
+                @endif
                 <a href="{{ url('/espacios') }}" style="color: #4a5568; text-decoration: none; transition: color 0.3s;"
                     onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#4a5568'">Espacios</a>
                 <a href="{{ url('/reservas') }}" style="color: #4a5568; text-decoration: none; transition: color 0.3s;"
