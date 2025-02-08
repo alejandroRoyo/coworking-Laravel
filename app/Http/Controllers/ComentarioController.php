@@ -19,9 +19,10 @@ class ComentarioController extends Controller
         $request->validate([
             'nombre'     => 'nullable|string|max:255',
             'comentario' => 'required|string',
+            'estrellas' => 'required',
         ]);
 
-        Comentario::create($request->only('nombre', 'comentario'));
+        Comentario::create($request->only('nombre', 'comentario','estrellas'));
 
         return redirect()->route('home')->with('success', 'Comentario agregado correctamente.');
     }

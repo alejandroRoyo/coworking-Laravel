@@ -1,9 +1,7 @@
 @extends('layouts.app-master')
 
 @section('content')
-    <h1 style="text-align: center; font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;">
-        Panel de Control
-    </h1>
+    <h1 style="text-align: center; font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;">Panel de Control</h1>
 
     <!-- Navegación entre pestañas -->
     <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
@@ -29,7 +27,10 @@
 
     <script>
         function showTab(tabId) {
-            document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
+            var tabs = document.querySelectorAll('.tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].style.display = 'none';
+            }
             document.getElementById(tabId).style.display = 'block';
         }
     </script>

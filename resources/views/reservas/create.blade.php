@@ -1,28 +1,48 @@
 @extends('layouts.app-master')
 
 @section('content')
-    <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem;">Hacer una Reserva</h1>
+    <h1 style="text-align:center; font-size:2.5rem; margin-bottom:20px;">Reservar Asientos</h1>
 
-    <form action="{{ route('reservas.store') }}" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
+    <form action="{{ route('reservas.store') }}" method="POST" style="max-width:600px; margin:0 auto;">
         @csrf
+        <!-- Selección de espacio -->
+        <div style="margin-bottom:1rem;">
+            <label for="espacio_id" style="display:block; margin-bottom:0.5rem;">Espacio:</label>
+            <select name="espacio_id" id="espacio_id" required style="width:100%; padding:0.5rem;">
+                @foreach ($espacios as $espacio)
+                    <option value="{{ $espacio->id }}" {{ $espacio->id == $defaultEspacio->id ? 'selected' : '' }}>
+                        {{ $espacio->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-        <label for="espacio_id" style="font-weight: 600; color: #4a5568;">Espacio:</label>
-        <select name="espacio_id" required style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;">
-            @foreach ($espacios as $espacio)
-                <option value="{{ $espacio->id }}">{{ $espacio->name }}</option>
+        <!-- Datos generales de la reserva -->
+        <div style="margin-bottom:1rem;">
+            <label for="fecha" style="display:block; margin-bottom:0.5rem;">Fecha:</label>
+            <input type="date" name="fecha" id="fecha" required style="width:100%; padding:0.5rem;">
+        </div>
+        <div style="margin-bottom:1rem;">
+            <label for="hora_inicio" style="display:block; margin-bottom:0.5rem;">Hora de Inicio:</label>
+            <input type="time" name="hora_inicio" id="hora_inicio" required style="width:100%; padding:0.5rem;">
+        </div>
+        <div style="margin-bottom:1rem;">
+            <label for="hora_fin" style="display:block; margin-bottom:0.5rem;">Hora de Fin:</label>
+            <input type="time" name="hora_fin" id="hora_fin" required style="width:100%; padding:0.5rem;">
+        </div>
+
+        <!-- Mapa/diagrama de asientos -->
+        <h3 style="margin-top:20px; margin-bottom:10px;">Selecciona los asientos:</h3>
+        <div id="seat-map" style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px;">
+            @foreach ($puestos as $puesto)
+                <div style="border:1px solid #ccc; padding:10px; text-align:center;">
+                    <input type="checkbox" name="puestos[]" value="{{ $puesto->id }}" id="puesto_{{ $puesto->id }}">
+                    <label for="puesto_{{ $puesto->id }}">{{ $puesto->label }}</label>
+                </div>
             @endforeach
-        </select>
-        
-        <label for="fecha" style="font-weight: 600; color: #4a5568;">Fecha:</label>
-        <input type="date" name="fecha" required style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;">
-        
-        <label for="hora_inicio" style="font-weight: 600; color: #4a5568;">Hora de Inicio:</label>
-        <input type="time" name="hora_inicio" required style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;">
-        
-        <label for="hora_fin" style="font-weight: 600; color: #4a5568;">Hora de Fin:</label>
-        <input type="time" name="hora_fin" required style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 0.375rem;">
+        </div>
 
-        <button type="submit" style="padding: 0.75rem; background-color: #4CAF50; color: white; border: none; border-radius: 0.375rem; cursor: pointer; transition: background-color 0.3s;">
+        <button type="submit" style="display:block; width:100%; padding:0.75rem; background:#007bff; color:white; border:none; border-radius:5px; margin-top:20px; cursor:pointer;">
             Reservar
         </button>
     </form>

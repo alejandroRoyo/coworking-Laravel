@@ -18,55 +18,62 @@ class ReservaController extends Controller
     public function create()
     {
         $espacios = Espacio::all();
+        // Se asume que en la vista 'reservas.create' se gestionará la carga del diagrama de asientos (puestos)
         return view('reservas.create', compact('espacios'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'espacio_id' => 'required|exists:espacios,id',
-            'fecha' => 'required|date|after_or_equal:today',
+        $validated = $request->validate([
+            'espacio_id'  => 'required|exists:espacios,id',
+            'fecha'       => 'required|date|after_or_equal:today',
             'hora_inicio' => 'required',
-            'hora_fin' => 'required|after:hora_inicio',
+            'hora_fin'    => 'required|after:hora_inicio',
+            'puestos'     => 'required|array',
+            'puestos.*'   => 'exists:puestos,id',
         ]);
 
-        // Obtener usuario autenticado
         $usuario_id = Auth::id();
 
-        // Comprobar disponibilidad del espacio
-        $existeReserva = Reserva::where('espacio_id', $request->espacio_id)
-            ->where('fecha', $request->fecha)
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('hora_inicio', [$request->hora_inicio, $request->hora_fin])
-                    ->orWhereBetween('hora_fin', [$request->hora_inicio, $request->hora_fin]);
-            })->exists();
+        // Comprobar disponibilidad para cada asiento seleccionado
+        foreach ($validated['puestos'] as $puestoId) {
+            $conflict = Reserva::where('puesto_id', $puestoId)
+                ->where('fecha', $validated['fecha'])
+                ->where(function ($query) use ($validated) {
+                    $query->whereBetween('hora_inicio', [$validated['hora_inicio'], $validated['hora_fin']])
+                          ->orWhereBetween('hora_fin', [$validated['hora_inicio'], $validated['hora_fin']]);
+                })->exists();
 
-        if ($existeReserva) {
-            return back()->withErrors(['error' => 'El espacio ya está reservado en ese horario.']);
+            if ($conflict) {
+                return back()->withErrors(['error' => 'Uno o varios de los asientos seleccionados ya están reservados en ese horario.']);
+            }
         }
 
-        // Crear la reserva
-        Reserva::create([
-            'usuario_id' => $usuario_id,
-            'espacio_id' => $request->espacio_id,
-            'fecha' => $request->fecha,
-            'hora_inicio' => $request->hora_inicio,
-            'hora_fin' => $request->hora_fin,
-        ]);
+        // Crear una reserva por cada asiento seleccionado
+        foreach ($validated['puestos'] as $puestoId) {
+            Reserva::create([
+                'usuario_id'   => $usuario_id,
+                'espacio_id'   => $validated['espacio_id'],
+                'puesto_id'    => $puestoId,
+                'fecha'        => $validated['fecha'],
+                'hora_inicio'  => $validated['hora_inicio'],
+                'hora_fin'     => $validated['hora_fin'],
+            ]);
+        }
 
-        return redirect()->route('reservas.index')->with('success', 'Reserva creada correctamente');
+        return redirect()->route('reservas.index')->with('success', 'Reserva(s) creada(s) correctamente.');
     }
-
 
     public function destroy(Reserva $reserva)
     {
         $reserva->delete();
         return redirect()->route('reservas.index')->with('success', 'Reserva cancelada');
     }
+
     public function edit(Reserva $reserva)
     {
-        // Opcional: pasar también los espacios si el usuario debe poder cambiar el espacio de la reserva
-        $espacios = \App\Models\Espacio::all();
+        // Se cargan todos los espacios para permitir cambiar el asignado en la edición
+        $espacios = Espacio::all();
         return view('reservas.edit', compact('reserva', 'espacios'));
     }
 

@@ -1,36 +1,42 @@
-@extends('layouts.app-master')
+<h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 15px;">Gestión de Espacios</h2>
 
-@section('content')
-    <h1 style="text-align: center; font-size: 2.5rem; font-weight: bold; margin-bottom: 20px;">
-        Panel de Control
-    </h1>
+<table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
+    <thead>
+        <tr style="background: #f0f0f0;">
+            <th style="border: 1px solid #ccc; padding: 10px;">Nombre</th>
+            <th style="border: 1px solid #ccc; padding: 10px;">Descripción</th>
+            <th style="border: 1px solid #ccc; padding: 10px;">Capacidad</th>
+            <th style="border: 1px solid #ccc; padding: 10px;">Precio por Hora</th>
+            <th style="border: 1px solid #ccc; padding: 10px;">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($espacios as $espacio)
+            <tr>
+                <td style="border: 1px solid #ccc; padding: 10px;">{{ $espacio->name }}</td>
+                <td style="border: 1px solid #ccc; padding: 10px;">{{ $espacio->description }}</td>
+                <td style="border: 1px solid #ccc; padding: 10px;">{{ $espacio->capacity }}</td>
+                <td style="border: 1px solid #ccc; padding: 10px;">${{ $espacio->precio_por_hora }}</td>
+                <td style="border: 1px solid #ccc; padding: 10px;">
+                    <a href="{{ route('espacios.edit', $espacio->id) }}" 
+                       style="padding: 5px 10px; background-color: #3182ce; color: white; text-decoration: none; border-radius: 5px; margin-right: 5px;">
+                        Editar
+                    </a>
+                    <form action="{{ route('espacios.destroy', $espacio->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" 
+                                style="background: red; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer;">
+                            Eliminar
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 
-    <!-- Navegación entre pestañas -->
-    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
-        <button onclick="showTab('usuarios')" style="padding: 10px 20px; border: none; background: #007bff; color: white; cursor: pointer;">Usuarios</button>
-        <button onclick="showTab('espacios')" style="padding: 10px 20px; border: none; background: #28a745; color: white; cursor: pointer;">Espacios</button>
-        <button onclick="showTab('reservas')" style="padding: 10px 20px; border: none; background: #ff9800; color: white; cursor: pointer;">Reservas</button>
-    </div>
-
-    <!-- Sección de Usuarios -->
-    <div id="usuarios" class="tab" style="display: block;">
-        @include('admin.usuarios')
-    </div>
-
-    <!-- Sección de Espacios -->
-    <div id="espacios" class="tab" style="display: none;">
-        {{-- @include('admin.espacios') --}}
-    </div>
-
-    <!-- Sección de Reservas -->
-    <div id="reservas" class="tab" style="display: none;">
-        {{-- @include('admin.reservas') --}}
-    </div>
-
-    <script>
-        function showTab(tabId) {
-            document.querySelectorAll('.tab').forEach(tab => tab.style.display = 'none');
-            document.getElementById(tabId).style.display = 'block';
-        }
-    </script>
-@endsection
+<!-- Paginación -->
+<div style="margin-top: 20px; text-align: center;">
+    {{ $espacios->links() }}
+</div>

@@ -12,5 +12,6 @@ class Comentario extends Model
     protected $fillable = [
         'nombre',
         'comentario',
+        'estrellas'
     ];
 }

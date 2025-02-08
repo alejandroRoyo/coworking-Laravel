@@ -10,10 +10,10 @@ class AdminController extends Controller
     {
         $usuarios = \App\Models\User::paginate(10);
         $espacios = \App\Models\Espacio::paginate(10);
-        $reservas = \App\Models\Reserva::paginate(10);
-
+        $reservas = \App\Models\Reserva::with(['usuario', 'espacio'])->paginate(10);
         return view('admin.panel', compact('usuarios', 'espacios', 'reservas'));
     }
+
 
 
     public function updateUser(Request $request, $id)

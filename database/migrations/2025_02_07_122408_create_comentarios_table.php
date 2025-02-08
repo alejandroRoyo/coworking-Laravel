@@ -13,8 +13,9 @@ class CreateComentariosTable extends Migration
     {
         Schema::create('comentarios', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->nullable(); // El nombre del cliente (opcional)
-            $table->text('comentario');            // El texto del comentario
+            $table->string('nombre')->nullable();
+            $table->text('comentario');
+            $table->integer('estrellas');
             $table->timestamps();
         });
     }

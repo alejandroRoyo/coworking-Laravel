@@ -2,7 +2,7 @@
     <div
         style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
         <!-- Logo -->
-        <a href="{{ url('/home') }}" style="font-size: 1.5rem; font-weight: 700; color: #4a5568;">Coworking</a>
+        <a href="{{ url('/home') }}" style="font-size: 1.5rem; font-weight: 700; color: #4a5568;">LaboraSpace</a>
 
         <!-- Menú de navegación -->
         <div style="display: flex; align-items: center; gap: 1rem;">
@@ -30,6 +30,8 @@
                         onmouseover="this.style.color='#dc2626'" onmouseout="this.style.color='#ef4444'">Logout</button>
                 </form>
             @endguest
+            <a href="{{ url('/contact') }}" style="color: #4a5568; text-decoration: none; transition: color 0.3s;"
+                onmouseover="this.style.color='#3b82f6'" onmouseout="this.style.color='#4a5568'">Contacta con nosotros</a>
         </div>
     </div>
 </nav>
