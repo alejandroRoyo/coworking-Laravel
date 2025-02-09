@@ -11,7 +11,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ComentarioController;
 
 // Página de bienvenida
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Rutas de autenticación
 Route::get('/login', [LoginController::class, 'show'])->name('login');

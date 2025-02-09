@@ -2,7 +2,7 @@
     <div
         style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
         <!-- Logo -->
-        <a href="{{ url('/home') }}" style="font-size: 1.5rem; font-weight: 700; color: #4a5568;">LaboraSpace</a>
+        <a href="{{ url('/') }}" style="font-size: 1.5rem; font-weight: 700; color: #4a5568;">LaboraSpace</a>
 
         <!-- Menú de navegación -->
         <div style="display: flex; align-items: center; gap: 1rem;">

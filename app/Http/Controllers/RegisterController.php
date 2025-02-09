@@ -11,7 +11,7 @@ class RegisterController extends Controller
 {
     public function show(){
         if (Auth::check()) {
-            return redirect('/home');
+            return redirect('/');
         }
         return view('auth.register');
     }
@@ -24,6 +24,6 @@ class RegisterController extends Controller
         Auth::login($user);
 
         // Redirigir a la página principal o a donde desees
-        return redirect('/home')->with('success', 'Registro exitoso. ¡Bienvenido ' . $user->name . '!');
+        return redirect('/')->with('success', 'Registro exitoso. ¡Bienvenido ' . $user->name . '!');
     }
 }
