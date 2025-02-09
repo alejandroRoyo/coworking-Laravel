@@ -7,6 +7,4 @@ Referencia->	https://coworkingspain.es/
 
 La lista de espacios debe parecerse a la práctica de la tienda virtual, no deben listarse en una tabla sino en un catálogo de espacios puestos en cascada.
 
-Las reservas si que deben poder rerservarse coo minimo en reservas de 1 hora, no dejar que sea el usuario quien lo seleccione personalizadamente.
 
-Indicaciones de como llegar al local

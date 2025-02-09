@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Puesto;
 
 class Espacio extends Model
 {
@@ -16,8 +18,8 @@ class Espacio extends Model
         'precio_por_hora',
     ];
 
-    public function reservas()
+    public function puestos()
     {
-        return $this->hasMany(Reserva::class);
+        return $this->hasMany(\App\Models\Puesto::class);
     }
 }

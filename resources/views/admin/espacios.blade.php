@@ -16,7 +16,7 @@
                 <td style="border: 1px solid #ccc; padding: 10px;">{{ $espacio->name }}</td>
                 <td style="border: 1px solid #ccc; padding: 10px;">{{ $espacio->description }}</td>
                 <td style="border: 1px solid #ccc; padding: 10px;">{{ $espacio->capacity }}</td>
-                <td style="border: 1px solid #ccc; padding: 10px;">${{ $espacio->precio_por_hora }}</td>
+                <td style="border: 1px solid #ccc; padding: 10px;">{{ $espacio->precio_por_hora }} €</td>
                 <td style="border: 1px solid #ccc; padding: 10px;">
                     <a href="{{ route('espacios.edit', $espacio->id) }}" 
                        style="padding: 5px 10px; background-color: #3182ce; color: white; text-decoration: none; border-radius: 5px; margin-right: 5px;">

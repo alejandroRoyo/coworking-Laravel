@@ -18,33 +18,50 @@ class ReservaController extends Controller
     public function create()
     {
         $espacios = Espacio::all();
-        $defaultEspacio = $espacios->first(); // Se asume que existe al menos un espacio
-        // Si deseas, también puedes cargar los puestos del espacio predeterminado:
+        $defaultEspacio = $espacios->first();
+        // Si no existe un espacio predeterminado, se envía una colección vacía.
         $puestos = $defaultEspacio ? $defaultEspacio->puestos : collect();
 
-        return view('reservas.create', compact('espacios', 'defaultEspacio', 'puestos'));
+        // Generar franjas horarias permitidas: de 08:00 a 20:00 (la reserva será de "hora_inicio" a "hora_inicio + 1 hora")
+        $slots = [];
+        for ($i = 8; $i <= 20; $i++) {
+            $slots[] = sprintf('%02d:00', $i);
+        }
+
+        return view('reservas.create', compact('espacios', 'defaultEspacio', 'puestos', 'slots'));
     }
+
+
 
     public function store(Request $request)
     {
+        // Generar la lista de franjas horarias permitidas
+        $allowedSlots = [];
+        for ($i = 8; $i <= 20; $i++) {
+            $allowedSlots[] = sprintf('%02d:00', $i);
+        }
+
         $validated = $request->validate([
             'espacio_id'  => 'required|exists:espacios,id',
             'fecha'       => 'required|date|after_or_equal:today',
-            'hora_inicio' => 'required',
-            'hora_fin'    => 'required|after:hora_inicio',
+            // Ahora se espera un valor entre 08:00 y 20:00
+            'hora_inicio' => 'required|in:' . implode(',', $allowedSlots),
             'puestos'     => 'required|array',
             'puestos.*'   => 'exists:puestos,id',
         ]);
 
+        $horaInicio = $validated['hora_inicio'];
+        // Calcular la hora de fin sumando 1 hora
+        $horaFin = date("H:i", strtotime($horaInicio . " +1 hour"));
         $usuario_id = Auth::id();
 
-        // Comprobar disponibilidad para cada asiento seleccionado
+        // Para cada asiento (puesto) seleccionado, verificar disponibilidad y crear la reserva
         foreach ($validated['puestos'] as $puestoId) {
             $conflict = Reserva::where('puesto_id', $puestoId)
                 ->where('fecha', $validated['fecha'])
-                ->where(function ($query) use ($validated) {
-                    $query->whereBetween('hora_inicio', [$validated['hora_inicio'], $validated['hora_fin']])
-                        ->orWhereBetween('hora_fin', [$validated['hora_inicio'], $validated['hora_fin']]);
+                ->where(function ($query) use ($horaInicio, $horaFin) {
+                    $query->whereBetween('hora_inicio', [$horaInicio, $horaFin])
+                        ->orWhereBetween('hora_fin', [$horaInicio, $horaFin]);
                 })->exists();
 
             if ($conflict) {
@@ -52,15 +69,14 @@ class ReservaController extends Controller
             }
         }
 
-        // Crear una reserva por cada asiento seleccionado
         foreach ($validated['puestos'] as $puestoId) {
             Reserva::create([
-                'usuario_id'   => $usuario_id,
-                'espacio_id'   => $validated['espacio_id'],
-                'puesto_id'    => $puestoId,
-                'fecha'        => $validated['fecha'],
-                'hora_inicio'  => $validated['hora_inicio'],
-                'hora_fin'     => $validated['hora_fin'],
+                'usuario_id'  => $usuario_id,
+                'espacio_id'  => $validated['espacio_id'],
+                'puesto_id'   => $puestoId,
+                'fecha'       => $validated['fecha'],
+                'hora_inicio' => $horaInicio,
+                'hora_fin'    => $horaFin,
             ]);
         }
 
@@ -75,21 +91,40 @@ class ReservaController extends Controller
 
     public function edit(Reserva $reserva)
     {
-        // Se cargan todos los espacios para permitir cambiar el asignado en la edición
         $espacios = Espacio::all();
-        return view('reservas.edit', compact('reserva', 'espacios'));
+        // Generar las franjas horarias permitidas para la edición
+        $slots = [];
+        for ($i = 8; $i <= 20; $i++) {
+            $slots[] = sprintf('%02d:00', $i);
+        }
+
+        return view('reservas.edit', compact('reserva', 'espacios', 'slots'));
     }
 
     public function update(Request $request, Reserva $reserva)
     {
-        $request->validate([
+        $allowedSlots = [];
+        for ($i = 8; $i <= 20; $i++) {
+            $allowedSlots[] = sprintf('%02d:00', $i);
+        }
+
+        $validated = $request->validate([
             'espacio_id'  => 'required|exists:espacios,id',
             'fecha'       => 'required|date',
-            'hora_inicio' => 'required',
-            'hora_fin'    => 'required|after:hora_inicio',
+            // Se espera un valor entre 08:00 y 20:00
+            'hora_inicio' => 'required|in:' . implode(',', $allowedSlots),
         ]);
 
-        $reserva->update($request->all());
+        $horaInicio = $validated['hora_inicio'];
+        $horaFin = date("H:i", strtotime($horaInicio . " +1 hour"));
+
+        $reserva->update([
+            'espacio_id'  => $validated['espacio_id'],
+            'fecha'       => $validated['fecha'],
+            'hora_inicio' => $horaInicio,
+            'hora_fin'    => $horaFin,
+        ]);
+
         return redirect()->route('reservas.index')->with('success', 'Reserva actualizada correctamente');
     }
 }
