@@ -10,11 +10,11 @@
             <label for="espacio_id" style="display:block; margin-bottom:0.5rem;">Espacio:</label>
             <select name="espacio_id" id="espacio_id" required style="width:100%; padding:0.5rem;">
                 @foreach ($espacios as $espacio)
-                    <option value="{{ $espacio->id }}" {{ $espacio->id == $defaultEspacio->id ? 'selected' : '' }}>
+                    <option value="{{ $espacio->id }}" {{ $defaultEspacio && $espacio->id == $defaultEspacio->id ? 'selected' : '' }}>
                         {{ $espacio->name }}
                     </option>
                 @endforeach
-            </select>
+            </select>            
         </div>
 
         <!-- Datos generales de la reserva -->

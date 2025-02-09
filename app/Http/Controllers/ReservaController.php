@@ -18,8 +18,11 @@ class ReservaController extends Controller
     public function create()
     {
         $espacios = Espacio::all();
-        // Se asume que en la vista 'reservas.create' se gestionará la carga del diagrama de asientos (puestos)
-        return view('reservas.create', compact('espacios'));
+        $defaultEspacio = $espacios->first(); // Se asume que existe al menos un espacio
+        // Si deseas, también puedes cargar los puestos del espacio predeterminado:
+        $puestos = $defaultEspacio ? $defaultEspacio->puestos : collect();
+
+        return view('reservas.create', compact('espacios', 'defaultEspacio', 'puestos'));
     }
 
     public function store(Request $request)
@@ -41,7 +44,7 @@ class ReservaController extends Controller
                 ->where('fecha', $validated['fecha'])
                 ->where(function ($query) use ($validated) {
                     $query->whereBetween('hora_inicio', [$validated['hora_inicio'], $validated['hora_fin']])
-                          ->orWhereBetween('hora_fin', [$validated['hora_inicio'], $validated['hora_fin']]);
+                        ->orWhereBetween('hora_fin', [$validated['hora_inicio'], $validated['hora_fin']]);
                 })->exists();
 
             if ($conflict) {
