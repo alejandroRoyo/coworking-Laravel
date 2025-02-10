@@ -11,17 +11,31 @@ class AdminController extends Controller
         $usuarios = \App\Models\User::paginate(10);
         $espacios = \App\Models\Espacio::paginate(10);
         $reservas = \App\Models\Reserva::with(['usuario', 'espacio'])->paginate(10);
-        return view('admin.panel', compact('usuarios', 'espacios', 'reservas'));
+        $allEspacios = \App\Models\Espacio::all(); // Agrega esta línea para obtener todos los espacios
+
+        return view('admin.panel', compact('usuarios', 'espacios', 'reservas', 'allEspacios'));
     }
-
-
 
     public function updateUser(Request $request, $id)
     {
-        $usuario = \App\Models\User::findOrFail($id);
-        $usuario->update(['rol' => $request->rol]);
-        return redirect()->route('admin.panel')->with('success', 'Rol actualizado correctamente.');
+        // Buscar el usuario o lanzar un error 404
+        $user = \App\Models\User::findOrFail($id);
+
+        // Validar los datos recibidos
+        $validated = $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'rol'   => 'required|in:Usuario,Administrador',
+        ]);
+
+        // Actualizar el usuario con los datos validados
+        $user->update($validated);
+
+        // Devolver la información actualizada en formato JSON
+        return response()->json($user);
     }
+
+
 
     public function deleteUser($id)
     {
@@ -29,13 +43,4 @@ class AdminController extends Controller
         $usuario->delete();
         return redirect()->route('admin.panel')->with('success', 'Usuario eliminado correctamente.');
     }
-
-//     public function editUser($id)
-// {
-//     // Busca el usuario por ID o lanza un error 404 si no se encuentra
-//     $user = \App\Models\User::findOrFail($id);
-//     // Retorna la vista de edición pasando el usuario encontrado
-//     return view('admin.editUser', compact('user'));
-// }
-
 }

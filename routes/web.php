@@ -54,4 +54,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.editUser');
     Route::put('/admin/users/{id}', [AdminController::class, 'updateUser'])->name('admin.updateUser');
     Route::delete('/admin/user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
+    Route::put('/reservas/{reserva}', [ReservaController::class, 'update'])->name('reservas.update');
+
 });

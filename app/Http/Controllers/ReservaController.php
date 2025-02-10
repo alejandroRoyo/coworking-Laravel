@@ -103,21 +103,24 @@ class ReservaController extends Controller
 
     public function update(Request $request, Reserva $reserva)
     {
+        // Generar las franjas horarias permitidas (de 08:00 a 20:00)
         $allowedSlots = [];
         for ($i = 8; $i <= 20; $i++) {
             $allowedSlots[] = sprintf('%02d:00', $i);
         }
 
+        // Validar los datos
         $validated = $request->validate([
             'espacio_id'  => 'required|exists:espacios,id',
             'fecha'       => 'required|date',
-            // Se espera un valor entre 08:00 y 20:00
             'hora_inicio' => 'required|in:' . implode(',', $allowedSlots),
         ]);
 
+        // Calcular la hora de fin sumándole 1 hora a la hora de inicio
         $horaInicio = $validated['hora_inicio'];
         $horaFin = date("H:i", strtotime($horaInicio . " +1 hour"));
 
+        // Actualizar la reserva
         $reserva->update([
             'espacio_id'  => $validated['espacio_id'],
             'fecha'       => $validated['fecha'],
@@ -125,6 +128,7 @@ class ReservaController extends Controller
             'hora_fin'    => $horaFin,
         ]);
 
-        return redirect()->route('reservas.index')->with('success', 'Reserva actualizada correctamente');
+        // Devolver la reserva actualizada en formato JSON
+        return response()->json($reserva);
     }
 }
