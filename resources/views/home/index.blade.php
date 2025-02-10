@@ -40,6 +40,20 @@
             </a>
         @endguest
     </div>
+
+    <div style="width: 100%; height: 400px; margin: 20px auto;">
+        <p style="font-size: 1.2rem; color: #555; margin-bottom: 20px;">
+            En Labora Space creemos en la creatividad, la colaboración y el crecimiento. Ofrecemos un ambiente
+            moderno y
+            flexible diseñado para profesionales, emprendedores y equipos que buscan un lugar inspirador donde
+            desarrollar
+            sus ideas. Con espacios diseñados para fomentar la productividad y la conexión, Labora Space es mucho
+            más
+            que un
+            lugar para trabajar: es una comunidad de personas que impulsan sus proyectos al siguiente nivel.
+        </p>
+    </div>
+    
     <div style="width: 100%; height: 400px; margin: 20px auto;">
         <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1088.7094786530292!2d-0.39370689090343003!3d39.484340037630155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6045f5783e389f%3A0xf49baca884105343!2s%5BIES%5D%20Instituto%20de%20Educaci%C3%B3n%20Secundaria%20Conseller%C3%ADa!5e0!3m2!1ses!2ses!4v1738928900983!5m2!1ses!2ses"

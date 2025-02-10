@@ -29,4 +29,13 @@ class AdminController extends Controller
         $usuario->delete();
         return redirect()->route('admin.panel')->with('success', 'Usuario eliminado correctamente.');
     }
+
+//     public function editUser($id)
+// {
+//     // Busca el usuario por ID o lanza un error 404 si no se encuentra
+//     $user = \App\Models\User::findOrFail($id);
+//     // Retorna la vista de edición pasando el usuario encontrado
+//     return view('admin.editUser', compact('user'));
+// }
+
 }

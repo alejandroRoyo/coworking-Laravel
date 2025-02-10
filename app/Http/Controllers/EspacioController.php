@@ -38,16 +38,19 @@ class EspacioController extends Controller
 
     public function update(Request $request, Espacio $espacio)
     {
-        $request->validate([
-            'name' => 'required',
-            'description' => 'required',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
             'capacity' => 'required|integer|min:1',
             'precio_por_hora' => 'required|numeric|min:0',
         ]);
 
-        $espacio->update($request->all());
-        return redirect()->route('espacios.index')->with('success', 'Espacio actualizado');
+        $espacio->update($validated);
+
+        // Devuelve la información actualizada en formato JSON para que el JS la use
+        return response()->json($espacio);
     }
+
 
     public function destroy(Espacio $espacio)
     {
