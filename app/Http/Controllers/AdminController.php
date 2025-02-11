@@ -11,10 +11,11 @@ class AdminController extends Controller
         $usuarios = \App\Models\User::paginate(10);
         $espacios = \App\Models\Espacio::paginate(10);
         $reservas = \App\Models\Reserva::with(['usuario', 'espacio'])->paginate(10);
-        $allEspacios = \App\Models\Espacio::all(); // Agrega esta línea para obtener todos los espacios
+        $allEspacios = \App\Models\Espacio::all(); // Para otras operaciones
 
         return view('admin.panel', compact('usuarios', 'espacios', 'reservas', 'allEspacios'));
     }
+
 
     public function editUser($id)
     {

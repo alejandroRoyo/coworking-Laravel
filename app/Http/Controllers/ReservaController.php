@@ -91,10 +91,10 @@ class ReservaController extends Controller
 
     public function edit(Reserva $reserva)
     {
-        // Se asume que también se cargan los espacios para poder elegirlos en el formulario.
         $espacios = \App\Models\Espacio::all();
         return view('admin.editReservas', compact('reserva', 'espacios'));
     }
+
 
 
     public function update(Request $request, Reserva $reserva)

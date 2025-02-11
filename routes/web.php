@@ -59,17 +59,19 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
 */
 Route::middleware('auth')->group(function () {
 
-    // Rutas de Espacios
+    // Rutas de recurso para espacios
     Route::resource('espacios', EspacioController::class);
-    // Ruta adicional para editar espacios en el área de administración
-    Route::get('/admin/espacios/{id}/edit', [EspacioController::class, 'edit'])
-         ->name('admin.editEspacios');
 
-    // Rutas de Reservas
+    // Ruta adicional para la edición en el área de administración
+    Route::get('/admin/espacios/{id}/edit', [EspacioController::class, 'edit'])
+        ->name('admin.editEspacios');
+
+
+    // Rutas de reservas
     Route::resource('reservas', ReservaController::class);
-    // Ruta adicional para editar reservas en el área de administración
-    Route::get('/admin/reservas/{reserva}/edit', [ReservaController::class, 'edit'])
-         ->name('admin.editReservas');
+    // Ruta específica para el área de administración para editar reservas
+    Route::get('/admin/reservas/{reserva}/edit', [ReservaController::class, 'edit'])->name('admin.editReservas');
+
     Route::put('/reservas/{reserva}', [ReservaController::class, 'update'])->name('reservas.update');
 
     // Panel de Control y Gestión de Usuarios

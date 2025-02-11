@@ -37,7 +37,8 @@ class EspacioController extends Controller
     {
         return view('admin.editEspacios', compact('espacio'));
     }
-
+    
+    
     public function update(Request $request, Espacio $espacio)
     {
         $validated = $request->validate([
