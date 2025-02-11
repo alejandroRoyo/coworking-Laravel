@@ -63,8 +63,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('espacios', EspacioController::class);
 
     // Ruta adicional para la edición en el área de administración
-    Route::get('/admin/espacios/{id}/edit', [EspacioController::class, 'edit'])
+    // Route::get('/admin/espacios/{id}/edit', [EspacioController::class, 'edit'])
+    //     ->name('admin.editEspacios');
+
+    // Ruta adicional para la edición en el área de administración
+    Route::get('/admin/espacios/{id}/edit', [EspacioController::class, 'editEspacios'])
         ->name('admin.editEspacios');
+
 
 
     // Rutas de reservas

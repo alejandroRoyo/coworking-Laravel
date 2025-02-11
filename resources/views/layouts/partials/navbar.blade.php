@@ -1,8 +1,11 @@
 <nav style="background-color: white; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
     <div
         style="max-width: 1280px; margin: 0 auto; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;">
-        <!-- Logo -->
-        <a href="{{ url('/') }}" style="font-size: 1.5rem; font-weight: 700; color: #4a5568;">LaboraSpace</a>
+        <!-- Logo y nombre de la web -->
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <img src="logo.avif" alt="Logo" style="width: 50px; height: auto;">
+            <a href="{{ url('/') }}" style="font-size: 1.5rem; font-weight: 700; color: #4a5568;">LaboraSpace</a>
+        </div>
 
         <!-- Menú de navegación -->
         <div style="display: flex; align-items: center; gap: 1rem;">

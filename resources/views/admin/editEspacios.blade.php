@@ -14,7 +14,7 @@
     @endif
 
     <!-- El formulario utiliza la ruta de actualización del recurso 'espacios.update' -->
-    <form action="{{ route('espacios.update', ['espacio' => $espacio->id]) }}" method="POST" style="max-width: 600px; margin: 0 auto;">
+<form action="{{ route('espacios.update', $espacio->id) }}" method="POST" style="max-width: 600px; margin: 0 auto;">
         @csrf
         @method('PUT')
 

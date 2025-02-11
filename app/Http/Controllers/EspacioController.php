@@ -53,6 +53,11 @@ class EspacioController extends Controller
         return redirect()->route('admin.panel')->with('success', 'Espacio actualizado correctamente.');
     }
 
+    public function editEspacios($id){
+        $espacio = Espacio::findOrFail($id);
+        return view('admin.editEspacios', compact('espacio'));
+    }
+
     public function destroy(Espacio $espacio)
     {
         $espacio->delete();

@@ -1,91 +1,123 @@
 @extends('layouts.app-master')
 
 @section('content')
-<div style="text-align: center; padding: 40px;">
-    @auth
-        <h1 style="font-size: 2.5rem; font-weight: bold; color: #333; margin-bottom: 20px;">
-            Bienvenido, {{ auth()->user()->name }}
-        </h1>
-        <p style="font-size: 1.2rem; color: #555; margin-bottom: 20px;">
-            Aquí puedes gestionar tus espacios de trabajo y reservas fácilmente.
-        </p>
-    @else
-        <h1 style="font-size: 2.5rem; font-weight: bold; color: #333; margin-bottom: 20px;">
-            Bienvenido a LaboraSpace
-        </h1>
-        <p style="font-size: 1.2rem; color: #555; margin-bottom: 20px;">
-            Reserva espacios de trabajo de manera rápida y sencilla. Elige entre salas de reuniones, oficinas privadas o
-            escritorios compartidos.
-        </p>
-    @endauth
-
-    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
-        @guest
-            <a href="{{ route('login') }}"
-                style="background-color: #007bff; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
-                Iniciar Sesión
-            </a>
-            <a href="{{ route('register') }}"
-                style="background-color: #28a745; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
-                Registrarse
-            </a>
+    <!-- Sección 1: Pantalla completa con fondo de imagen -->
+    <div
+        style="height: 100vh; background: url('/coworking.webp') no-repeat center center/cover; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px;">
+        @auth
+            <h1 style="font-size: 2.5rem; font-weight: bold; color: #fff; margin-bottom: 20px;">
+                Bienvenido, {{ auth()->user()->name }}
+            </h1>
+            <p style="font-size: 1.2rem; color: #f3f4f6; margin-bottom: 20px;">
+                Aquí puedes gestionar tus espacios de trabajo y reservas fácilmente.
+            </p>
         @else
-            <a href="{{ route('espacios.index') }}"
-                style="background-color: #007bff; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
-                Ver Espacios
-            </a>
-            <a href="{{ route('reservas.index') }}"
-                style="background-color: #28a745; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
-                Mis Reservas
-            </a>
-        @endguest
+            <h1 style="font-size: 2.5rem; font-weight: bold; color: #fff; margin-bottom: 20px;">
+                Bienvenido a LaboraSpace
+            </h1>
+            <p style="font-size: 1.2rem; color: #f3f4f6; margin-bottom: 20px;">
+                Reserva espacios de trabajo de manera rápida y sencilla. Elige entre salas de reuniones, oficinas privadas o
+                escritorios compartidos.
+            </p>
+        @endauth
+
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+            @guest
+                <a href="{{ route('login') }}"
+                    style="background-color: #007bff; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                    Iniciar Sesión
+                </a>
+                <a href="{{ route('register') }}"
+                    style="background-color: #28a745; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                    Registrarse
+                </a>
+            @else
+                <a href="{{ route('espacios.index') }}"
+                    style="background-color: #007bff; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                    Ver Espacios
+                </a>
+                <a href="{{ route('reservas.index') }}"
+                    style="background-color: #28a745; color: white; padding: 12px 24px; border-radius: 5px; text-decoration: none; font-weight: bold;">
+                    Mis Reservas
+                </a>
+            @endguest
+        </div>
     </div>
 
-    <div style="width: 100%; height: 400px; margin: 20px auto;">
-        <p style="font-size: 1.2rem; color: #555; margin-bottom: 20px;">
-            En Labora Space creemos en la creatividad, la colaboración y el crecimiento. Ofrecemos un ambiente
-            moderno y
-            flexible diseñado para profesionales, emprendedores y equipos que buscan un lugar inspirador donde
-            desarrollar
-            sus ideas. Con espacios diseñados para fomentar la productividad y la conexión, Labora Space es mucho
-            más
-            que un
-            lugar para trabajar: es una comunidad de personas que impulsan sus proyectos al siguiente nivel.
-        </p>
+    <!-- Sección 2: Contenido adicional (texto e imagen) -->
+    <div style="padding: 40px; background-color: #f3f4f6;">
+        <div style="display: flex; align-items: center; gap: 20px; max-width: 1200px; margin: 0 auto;">
+            <div style="flex: 1;">
+                <p style="font-size: 1.2rem; color: #555;">
+                    En Labora Space creemos en la creatividad, la colaboración y el crecimiento. Ofrecemos un ambiente
+                    moderno y flexible diseñado para profesionales, emprendedores y equipos que buscan un lugar inspirador
+                    donde desarrollar sus ideas.
+                </p>
+            </div>
+            <div style="flex: 1;">
+                <img src="coworking.webp" style="max-width: 100%; height: auto;" alt="Imagen de coworking">
+            </div>
+        </div>
     </div>
-    
-    <div style="width: 100%; height: 400px; margin: 20px auto;">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1088.7094786530292!2d-0.39370689090343003!3d39.484340037630155!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6045f5783e389f%3A0xf49baca884105343!2s%5BIES%5D%20Instituto%20de%20Educaci%C3%B3n%20Secundaria%20Conseller%C3%ADa!5e0!3m2!1ses!2ses!4v1738928900983!5m2!1ses!2ses"
-            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+    <!-- Sección 3: Mapa y Cómo Llegar -->
+    <div
+        style="display: flex; flex-wrap: wrap; gap: 20px; padding: 40px; background-color: #e5e7eb; max-width: 1200px; margin: 0 auto;">
+        <div style="flex: 1; min-width: 300px;">
+            <h2 style="font-size: 1.75rem; font-weight: bold; margin-bottom: 10px;">Ubicación</h2>
+            <div style="width: 100%; height: 300px;">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3079.296761255105!2d-0.3957059236137058!3d39.48521311180664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6045f5783e389f%3A0xf49baca884105343!2s%5BIES%5D%20Instituto%20de%20Educaci%C3%B3n%20Secundaria%20Conseller%C3%ADa!5e0!3m2!1ses!2ses!4v1739281386298!5m2!1ses!2ses"
+                    width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+        <div style="flex: 1; min-width: 300px;">
+            <h2 style="font-size: 1.75rem; font-weight: bold; margin-bottom: 10px;">Cómo Llegar</h2>
+            <p style="font-size: 1.2rem; color: #555;">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim
+                sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.
+            </p>
+        </div>
     </div>
-    <!-- Sección de Comentarios -->
-    <div style="margin-top: 40px; padding: 20px; border-top: 1px solid #ccc;">
-        <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 20px;">Comentarios de Clientes</h2>
+
+    <!-- Sección 4: Comentarios -->
+    <div
+        style="margin-top: 40px; padding: 20px; background-color: #f9fafb; border-top: 1px solid #e2e8f0; border-radius: 8px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+        <h2 style="font-size: 2rem; font-weight: bold; color: #333; margin-bottom: 20px;">Comentarios de Clientes</h2>
 
         @if ($comentarios->count() > 0)
-            @foreach ($comentarios as $comentario)
-                <div style="margin-bottom: 20px; padding: 10px; border: 1px solid #e2e8f0; border-radius: 5px;">
-                    <p style="font-weight: bold;">{{ $comentario->nombre ?? 'Anónimo' }}</p>
-                    <p>{{ $comentario->comentario }}</p>
-                    <p style="font-size: 0.8rem; color: #777;">{{ $comentario->created_at->format('d/m/Y H:i') }}</p>
-                    <p>
-                        @for ($i = 0; $i < $comentario->estrellas; $i++)
-                            ★
-                        @endfor
-                    </p>
-                </div>
-            @endforeach
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                @foreach ($comentarios as $comentario)
+                    <div
+                        style="background-color: white; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                            <p style="font-weight: bold; color: #333; margin: 0;">{{ $comentario->nombre ?? 'Anónimo' }}</p>
+                            <p style="font-size: 0.8rem; color: #777; margin: 0;">
+                                {{ $comentario->created_at->format('d/m/Y H:i') }}</p>
+                        </div>
+                        <p style="color: #555; margin-bottom: 0.5rem; white-space: pre-wrap; word-wrap: break-word;">
+                            {{ $comentario->comentario }}
+                        </p>
+                        <div style="color: #ffc107;">
+                            @for ($i = 0; $i < $comentario->estrellas; $i++)
+                                ★
+                            @endfor
+                        </div>
+                    </div>
+                @endforeach
+            </div>
         @else
-            <p style="color: #888;">No hay comentarios.</p>
+            <p style="color: #888; text-align: center;">No hay comentarios.</p>
         @endif
 
-        <!-- Botón para añadir un comentario -->
-        <a href="{{ route('comentarios.create') }}"
-            style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">
-            Añadir Comentario
-        </a>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ route('comentarios.create') }}"
+                style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px; transition: background-color 0.3s;">
+                Añadir Comentario
+            </a>
+        </div>
     </div>
-</div>
 @endsection
