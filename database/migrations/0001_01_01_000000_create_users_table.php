@@ -28,25 +28,6 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-
-        // Schema::create('espacios', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->string('name');
-        //     $table->text('description');
-        //     $table->integer('capacity');
-        //     $table->decimal('precio_por_hora', 8, 2);
-        //     $table->timestamps();
-        // });
-
-        // Schema::create('reservas', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->foreignId('usuario_id')->constrained('users')->onDelete('cascade');
-        //     $table->foreignId('espacio_id')->constrained('espacios')->onDelete('cascade');
-        //     $table->date('fecha');
-        //     $table->time('hora_inicio');
-        //     $table->time('hora_fin');
-        //     $table->timestamps();
-        // });
     }
 
     /**

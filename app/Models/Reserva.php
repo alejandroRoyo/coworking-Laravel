@@ -26,4 +26,10 @@ class Reserva extends Model
     {
         return $this->belongsTo(Espacio::class);
     }
+
+    // Relación muchos a muchos con el modelo Puesto
+    public function puestos()
+    {
+        return $this->belongsToMany(Puesto::class, 'reserva_puesto', 'reserva_id', 'puesto_id');
+    }
 }

@@ -10,7 +10,7 @@
                 Si tienes alguna duda, comentario o sugerencia, puedes contactarnos y nos comunicaremos contigo lo antes posible.
             </p>
             <!-- Ajuste del tamaño de la imagen -->
-            <img src="logo.avif" alt="Logo" style="max-width: 250px; width: 100%; height: auto; border-radius: 8px;">
+            <img src="logo.png" alt="Logo" style="max-width: 250px; width: 100%; height: auto; border-radius: 8px;">
         </div>
 
         <!-- Sección derecha: Formulario -->
