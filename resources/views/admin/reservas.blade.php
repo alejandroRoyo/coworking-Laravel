@@ -1,6 +1,6 @@
-@extends('layouts.app-master')
+{{-- @extends('layouts.app-master')
 
-@section('content')
+@section('content') --}}
 <h2 style="font-size: 2rem; font-weight: bold; margin-bottom: 15px;">Gestión de Reservas</h2>
 
 <table style="width: 100%; border-collapse: collapse; border: 1px solid #ccc;">
@@ -153,4 +153,4 @@ function saveEditReservation(reservaId) {
 }
 
 </script>
-@endsection
+{{-- @endsection --}}

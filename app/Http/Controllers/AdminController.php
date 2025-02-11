@@ -16,24 +16,28 @@ class AdminController extends Controller
         return view('admin.panel', compact('usuarios', 'espacios', 'reservas', 'allEspacios'));
     }
 
+    public function editUser($id)
+    {
+        $user = \App\Models\User::findOrFail($id);
+        return view('admin.editUser', compact('user'));
+    }
+
+
     public function updateUser(Request $request, $id)
     {
-        // Buscar el usuario o lanzar un error 404
         $user = \App\Models\User::findOrFail($id);
 
-        // Validar los datos recibidos
         $validated = $request->validate([
             'name'  => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'rol'   => 'required|in:Usuario,Administrador',
         ]);
 
-        // Actualizar el usuario con los datos validados
         $user->update($validated);
 
-        // Devolver la información actualizada en formato JSON
-        return response()->json($user);
+        return redirect()->route('admin.panel')->with('success', 'Usuario actualizado correctamente.');
     }
+
 
 
 
